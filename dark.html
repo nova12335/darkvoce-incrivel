@@ -60,13 +60,18 @@
     const paragraphs = document.querySelectorAll('.message p');
 
     function checkVisibility() {
-      const windowBottom = window.innerHeight + window.scrollY;
+      const windowTop = window.scrollY;
+      const windowBottom = window.scrollY + window.innerHeight;
 
       paragraphs.forEach(p => {
-        const paragraphTop = p.offsetTop;
+        const rect = p.getBoundingClientRect();
+        const elemTop = rect.top + window.scrollY;
+        const elemBottom = elemTop + rect.height;
 
-        if (windowBottom > paragraphTop + 20) { // 20px antes de aparecer
+        if (elemBottom > windowTop + 10 && elemTop < windowBottom - 10) {
           p.classList.add('visible');
+        } else {
+          p.classList.remove('visible');
         }
       });
     }
