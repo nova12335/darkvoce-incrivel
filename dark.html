@@ -10,28 +10,33 @@
     body {
       margin: 0;
       height: 100vh;
-      background-color: white;
+      background-color: #000;
       font-family: 'inter', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
       padding: 40px 20px;
-      color: #222;
+      color: #fff;
       line-height: 1.8;
       font-size: 2rem;
-      opacity: 0;
-      animation: fadein 2.5s forwards;
+      overflow-y: auto;
     }
 
     .message {
       max-width: 700px;
     }
 
-    @keyframes fadein {
-      to {
-        opacity: 1;
-      }
+    p {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      margin: 1em 0;
+    }
+
+    p.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
@@ -53,5 +58,22 @@
     <p>ele não te odeia, ele gosta de vc demais, ele se importa com vc,</p>
     <p>igual o Caleb e o Thiago se importam, e eu também me importo MUITO, mas MUITO com vc!</p>
   </div>
+
+  <script>
+    const paragraphs = document.querySelectorAll('.message p');
+    let current = 0;
+
+    function showNext() {
+      if (current < paragraphs.length) {
+        paragraphs[current].classList.add('visible');
+        current++;
+        setTimeout(showNext, 1500);
+      }
+    }
+
+    window.onload = () => {
+      showNext();
+    };
+  </script>
 </body>
 </html>
