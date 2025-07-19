@@ -35,6 +35,17 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    .emoji {
+      font-size: 6rem;
+      margin-top: 2rem;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .emoji.visible {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -54,10 +65,12 @@
     <p>ele até falou pra mim que sem vc ele estaria meio sem rumo,</p>
     <p>ele não te odeia, ele gosta de vc demais, ele se importa com vc,</p>
     <p>igual o Caleb e o Thiago se importam, e eu também me importo MUITO, mas MUITO com vc!</p>
+    <p class="emoji">🤯</p>
   </div>
 
   <script>
-    const paragraphs = document.querySelectorAll('.message p');
+    const paragraphs = document.querySelectorAll('.message p:not(.emoji)');
+    const emoji = document.querySelector('.emoji');
 
     function checkVisibility() {
       const windowTop = window.scrollY;
@@ -74,6 +87,15 @@
           p.classList.remove('visible');
         }
       });
+
+      // Mostrar emoji quando o último parágrafo estiver visível
+      const lastParagraph = paragraphs[paragraphs.length - 1];
+      const lastRect = lastParagraph.getBoundingClientRect();
+      if (lastRect.bottom < window.innerHeight && lastRect.bottom > 0) {
+        emoji.classList.add('visible');
+      } else {
+        emoji.classList.remove('visible');
+      }
     }
 
     window.addEventListener('scroll', checkVisibility);
